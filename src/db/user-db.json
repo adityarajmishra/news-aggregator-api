@@ -1,0 +1,68 @@
+{
+  "users": [
+    {
+      "user_id": "6a4603ec-bec9-41c4-8229-341b175cfc53",
+      "user_name": "Rahul",
+      "user_email": "adityaraj.pilot@@outlook.com",
+      "password": "$2b$08$lrxvAVeoNtMThmq8sZYqhuMKc/1W7xmqrdX5JDQ5kw67YLpk20XJm",
+      "user_type": "normal",
+      "user_preferences": [],
+      "liked_news": [],
+      "created_at": "20231005150431",
+      "read_articles": [],
+      "favorite_news": []
+    },
+    {
+      "user_id": "c7017451-49bd-4325-9368-787a874b49b9",
+      "user_name": "Rohit",
+      "user_email": "rohit@gmail.com",
+      "password": "$2b$08$D8SO9Qzu0AvMJDo6C9zUQe9Gf5GcKnbdUuKmpv0TJfl7wskZnkq2O",
+      "user_type": "normal",
+      "user_preferences": [],
+      "liked_news": [],
+      "created_at": "20231005154250",
+      "read_articles": [],
+      "favorite_news": []
+    },
+    {
+      "status": true,
+      "message": "User added successfully",
+      "user": {
+        "user_id": "4af70f8a-d11b-4a37-98cd-dfda1f41dde1",
+        "user_name": "Shio Shankar",
+        "user_email": "shankar@yahoo.com",
+        "password": "$2b$08$zmoRcfUH2eaiaZMqS24oMOuaaJCJZkriEGQ59xw2.IqQV4UsRqo9u",
+        "user_type": "normal",
+        "user_preferences": [],
+        "liked_news": [],
+        "created_at": "20231008123712",
+        "read_articles": [],
+        "favorite_news": []
+      }
+    },
+    {
+      "user_id": "6362a263-36c4-42be-a28f-cbd50e931805",
+      "user_name": "Geeta",
+      "user_email": "geeta@yahoo.co.in",
+      "password": "$2b$08$Eb6J/BEglqyGhDL78b2Hn.nxsV16Ck29PW8GCmpRTWHKWV7RuIcum",
+      "user_type": "normal",
+      "user_preferences": [],
+      "liked_news": [],
+      "created_at": "20231008123752",
+      "read_articles": [],
+      "favorite_news": []
+    },
+    {
+      "user_id": "d113a2ea-310c-49dc-9873-a47f77fda274",
+      "user_name": "Richa",
+      "user_email": "richa@gmail.com",
+      "password": "$2b$08$ak2RLTzeVXf9zNSKDhCuAuN/1laiiiZOhPAuslAPinX4wlNchTiyq",
+      "user_type": "normal",
+      "user_preferences": [],
+      "liked_news": [],
+      "created_at": "20231008124332",
+      "read_articles": [],
+      "favorite_news": []
+    }
+  ]
+}
