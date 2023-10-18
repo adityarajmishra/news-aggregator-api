@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import timestamp from 'time-stamp';
 import bcrypt from 'bcrypt';
-import { filterData } from '../helpers/filterData';
+import { filterData } from '../helpers/filetrData';
 
 /**
  * User Model
@@ -46,12 +46,6 @@ class User {
   }
 }
 
-/**
- * Checks the user Request and converts it, with errors wherever needed
- * @param {user request} obj
- * @param {*} operation
- * @returns { status: boolean, message: string, user: User }
- */
 function userFromJSON(obj: any, operation: string = 'create'): { status: boolean; message: string; user: User } {
   if (!obj) {
     return {

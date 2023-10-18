@@ -2,12 +2,6 @@ import userData from '../db/user-db.json';
 import { filterData } from '../helpers/filetrData';
 import { writeToFile } from '../helpers/fileOperations';
 
-/**
- * To update the whole user
- * @param {userId} userId
- * @param {userBody} userParams
- * @returns { message: string, status: boolean }
- */
 function updateUser(userId: any, userParams: Record<string, any>) {
   const userToUpdate = filterData(userId, 1);
 

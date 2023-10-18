@@ -1,23 +1,15 @@
-import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import userData from '../db/user-db.json';
-import { writeToFile } from '../helpers/fileOperations';
-import { userFromJSON } from '../models/userModel';
-import { filterData } from '../helpers/filterData';
+import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import userData from "../db/user-db.json";
+import { writeToFile } from "../helpers/fileOperations";
+import { userFromJSON, User } from "../models/userModel";
+import { filterData } from "../helpers/filetrData";
 
-/**
- * To Register/Signup the user
- * Endpoint: /api/user/register
- * 
- * @param {userData from user/front-end} req 
- * @param {status: !status, message: "User added successfully"} res 
- * @returns status: !status, message: "User added successfully"
- */
 const register = (req: Request, res: Response) => {
   const addUser = userFromJSON(req.body);
   if (addUser.status) {
-    userData.users.push(addUser.user);
+    userData.users.push(addUser.user as User);
     const result = writeToFile(userData, "user");
     if (result.status) {
       return res.status(200).send(addUser);
@@ -29,25 +21,20 @@ const register = (req: Request, res: Response) => {
   }
 };
 
-/**
- * To login
- * Endpoint /api/user/login
- * 
- * @param {userMail, password} req 
- * @param {if (true) {jwt} else {error related}} res 
- * @returns 
- */
 const login = (req: Request, res: Response) => {
   const userMail = req.body.user_email;
   const passedPassword = req.body.password;
   const user = filterData(userMail, 4);
   if (user[0] !== null) {
-    const isValidPassword = bcrypt.compareSync(passedPassword, user[0].password);
+    const isValidPassword = bcrypt.compareSync(
+      passedPassword,
+      user[0].password
+    );
 
     if (isValidPassword) {
       const token = jwt.sign(
         {
-          id: user.id,
+          id: user[0].user_id, // Assuming user_id is the ID you want to include
         },
         process.env.API_SECRET as string, // Ensure you have the appropriate type for process.env.API_SECRET
         {

@@ -1,10 +1,5 @@
 import { filterData } from '../helpers/filetrData';
 
-/**
- * Get news by newsId
- * @param {newsId} id
- * @returns arrayOf(news)
- */
 function getNews(id: any) {
   return filterData(id, 3) || [];
 }

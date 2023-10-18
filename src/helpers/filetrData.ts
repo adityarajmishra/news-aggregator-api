@@ -1,12 +1,6 @@
 import userData from '../db/user-db.json';
 import newsData from '../db/news-db.json';
 
-/**
- * To filter data as required
- * @param {newsId | userId} id
- * @param {1,2,3,4} type
- * @returns arrayOf(data)
- */
 export function filterData(id: any, type: number) {
   switch (type) {
     case 1:

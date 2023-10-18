@@ -5,13 +5,6 @@ import { writeToFile } from '../helpers/fileOperations';
 
 const URL = 'https://newsapi.org/v2/';
 
-/**
- * To fetch the news globally, here used for cron-job to keep news refreshing every 14 minutes,
- * which is ~(24*60)/100
- * 100 is the number of requests available for free by newsapi.org
- *
- * it just writes to file
- */
 const categoriesList = categories();
 
 async function getNews() {
