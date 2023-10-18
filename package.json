@@ -1,6 +1,6 @@
 {
   "name": "news-aggregator-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A RESTful API that allows users to fetch news articles from multiple sources based on their preferences",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
