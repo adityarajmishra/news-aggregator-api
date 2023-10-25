@@ -19,7 +19,7 @@ userRoutes.post('/login', login);
  */
 userRoutes.get('/preferences/:id', (req: Request, res: Response) => {
   const user = filterData(req.params.id, 1); // 1 => user data where userId = passed id
-  res.status(200).send(user[0].user_preferences);
+  res.status(200).send((user as any[])[0].user_preferences);
 });
 
 /**

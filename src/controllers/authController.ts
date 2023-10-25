@@ -3,16 +3,16 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import userData from "../db/user-db.json";
 import { writeToFile } from "../helpers/fileOperations";
-import { userFromJSON, User } from "../models/userModel";
+import { User, userFromJSON } from "../models/userModel";
 import { filterData } from "../helpers/filetrData";
 
 const register = (req: Request, res: Response) => {
   const addUser = userFromJSON(req.body);
   if (addUser.status) {
-    userData.users.push(addUser.user as User);
+    userData.users.push();
     const result = writeToFile(userData, "user");
     if (result.status) {
-      return res.status(200).send(addUser);
+      return res.status(200).send(addUser.user);
     } else {
       return res.status(400).send({ message: result.message });
     }
@@ -24,8 +24,8 @@ const register = (req: Request, res: Response) => {
 const login = (req: Request, res: Response) => {
   const userMail = req.body.user_email;
   const passedPassword = req.body.password;
-  const user = filterData(userMail, 4);
-  if (user[0] !== null) {
+  const user = filterData(userMail, 4) as User[];
+  if (user && user[0] !== null) {
     const isValidPassword = bcrypt.compareSync(
       passedPassword,
       user[0].password
@@ -34,9 +34,9 @@ const login = (req: Request, res: Response) => {
     if (isValidPassword) {
       const token = jwt.sign(
         {
-          id: user[0].user_id, // Assuming user_id is the ID you want to include
+          id: user[0].user_id,
         },
-        process.env.API_SECRET as string, // Ensure you have the appropriate type for process.env.API_SECRET
+        process.env.API_SECRET as string,
         {
           expiresIn: 86400,
         }
@@ -46,10 +46,10 @@ const login = (req: Request, res: Response) => {
         accessToken: token,
       });
     } else {
-      return res.status(404).send({ message: "wrong password" });
+      return res.status(404).send({ message: "Wrong password" });
     }
   } else {
-    return res.status(404).send({ message: "user not found" });
+    return res.status(404).send({ message: "User not found" });
   }
 };
 

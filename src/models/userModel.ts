@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import timestamp from 'time-stamp';
 import bcrypt from 'bcrypt';
+import { format } from 'date-fns'; // Import date-fns format function
 import { filterData } from '../helpers/filetrData';
 
 /**
@@ -24,7 +24,7 @@ class User {
   favorite_news: string[];
 
   constructor(
-    user_id: string,
+    user_id: string = '',
     user_name = 'Default name',
     user_email = 'something@something.com',
     password = ' ',
@@ -50,7 +50,7 @@ function userFromJSON(obj: any, operation: string = 'create'): { status: boolean
   if (!obj) {
     return {
       status: false,
-      message: 'We do not accept empty object',
+      message: 'We do not accept an empty object',
       user: new User(),
     };
   } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(obj.user_email)) {
@@ -59,24 +59,34 @@ function userFromJSON(obj: any, operation: string = 'create'): { status: boolean
       message: 'Enter a valid email',
       user: new User(),
     };
-  } else if (operation === 'create' && filterData(obj.user_email, 4)[0] === null) {
-    const { user_name, user_email, password, type, user_preferences, liked_news } = obj;
-    const user_id = uuidv4();
-    const created_at = timestamp('YYYYMMDDHHmmss');
-    const hashedPassword = bcrypt.hashSync(password, 8);
+  } else {
+    const userData = filterData(obj.user_email, 4) as User[];
+    if (operation === 'create' && userData && userData[0] === null) {
+      const { user_name, user_email, password, type, user_preferences, liked_news } = obj;
+      const user_id = uuidv4();
+      const created_at = format(new Date(), 'yyyyMMddHHmmss'); // Use date-fns format
+      const hashedPassword = bcrypt.hashSync(password, 8);
 
-    return {
-      status: true,
-      message: 'User added successfully',
-      user: new User(user_id, user_name, user_email, hashedPassword, type, user_preferences, liked_news, created_at),
-    };
-  } else if (filterData(obj.user_email, 4) !== null) {
-    return {
-      status: false,
-      message: 'User already exists',
-      user: new User(),
-    };
+      return {
+        status: true,
+        message: 'User added successfully',
+        user: new User(user_id, user_name, user_email, hashedPassword, type, user_preferences, liked_news, created_at),
+      };
+    } else if (userData && userData[0] !== null) {
+      return {
+        status: false,
+        message: 'User already exists',
+        user: new User(),
+      };
+    }
   }
+
+  // Default return in case none of the conditions match
+  return {
+    status: false,
+    message: 'Operation failed',
+    user: new User(),
+  };
 }
 
 export { User, userFromJSON };
