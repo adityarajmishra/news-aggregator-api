@@ -33,12 +33,6 @@ class News {
   }
 }
 
-/**
- * Convert NewsAPI object to NewsDb object
- * @param {from NewsAPI} obj
- * @param {category} category
- * @returns [News]
- */
 function newsFromJSON(obj: any[], category: string = 'general'): News[] {
   if (!obj) return [];
   return obj.map((element) => {

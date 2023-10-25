@@ -1,13 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-/**
- * To verify the header
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
- * @returns 
- */
 const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   if (req.headers && req.headers.authorization) {
     jwt.verify(

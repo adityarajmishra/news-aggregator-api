@@ -3,7 +3,8 @@ import { newsFromJSON, categories } from '../models/newsModel';
 import { readNews, markNewsFavorite } from '../helpers/updateUser';
 import { getReadNews, getFavNews, getUserPrefs } from '../helpers/retrievenewsFromFile';
 import newsData from '../db/news-db.json';
-import fetchUrl from '../helpers/fetchUrl';
+import { fetchUrl } from '../helpers/fetchUrl';
+
 
 const newsRoutes = express.Router();
 const URL = 'https://newsapi.org/v2/';
@@ -44,9 +45,9 @@ newsRoutes.get('/userprefs', (req: Request, res: Response) => {
  */
 newsRoutes.get('/search/:keyword', async (req: Request, res: Response) => {
   const payload = {
-    page: 1,
-    q: req.params.keyword,
-    apiKey: process.env.NEWS_API_KEY,
+    page: '1', // Convert to string
+    category: req.params.category,
+    apiKey: process.env.NEWS_API_KEY || '',
   };
   const url = new URLSearchParams(payload);
 
@@ -65,9 +66,9 @@ newsRoutes.get('/search/:keyword', async (req: Request, res: Response) => {
  */
 newsRoutes.get('/category/:category', async (req: Request, res: Response) => {
   const payload = {
-    page: 1,
+    page: '1', // Convert to string
     category: req.params.category,
-    apiKey: process.env.NEWS_API_KEY,
+    apiKey: process.env.NEWS_API_KEY || '',
   };
   const url = new URLSearchParams(payload);
 

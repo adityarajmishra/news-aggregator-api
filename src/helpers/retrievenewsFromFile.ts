@@ -1,21 +1,25 @@
 import { filterData } from '../helpers/filetrData';
 
-/**
- * Get news by newsId
- * @param {newsId} id
- * @returns arrayOf(news)
- */
+// Define an interface for the user data structure
+interface UserData {
+  user_id: string;
+  user_name: string;
+  user_email: string;
+  password: string;
+  user_type: string;
+  user_preferences: string[];
+  liked_news: string[];
+  created_at: string;
+  read_articles: string[]; // You might want to specify the type of these properties
+  favorite_news: string[]; // based on their actual data type
+}
+
 function getNews(id: any) {
   return filterData(id, 3) || [];
 }
 
-/**
- * Get the read news by the user
- * @param {userId} userId
- * @returns { message: news | "No News read", status: boolean }
- */
 function getReadNews(userId: any) {
-  const user = filterData(userId, 1);
+  const user = filterData(userId, 1) as UserData | null;
   if (user) {
     const readNews = user.read_articles.map((element) => filterData(element, 3)).filter(Boolean);
     if (readNews.length > 0) {
@@ -25,13 +29,8 @@ function getReadNews(userId: any) {
   return { message: "No News read", status: false };
 }
 
-/**
- * Get the news by user preferences
- * @param {userId} userId
- * @returns { message: [news] | "No news found", status: boolean }
- */
 function getUserPrefs(userId: any) {
-  const user = filterData(userId, 1);
+  const user = filterData(userId, 1) as UserData | null;
   if (user) {
     const newsByPref = user.user_preferences.map((element) => filterData(element, 5)).filter(Boolean);
     if (newsByPref.length > 0) {
@@ -41,13 +40,8 @@ function getUserPrefs(userId: any) {
   return { status: false, message: "No news found" };
 }
 
-/**
- * Get the favorite news by the user
- * @param {userId} userId
- * @returns { message: news | "No fav news", status: boolean }
- */
 function getFavNews(userId: any) {
-  const user = filterData(userId, 1);
+  const user = filterData(userId, 1) as UserData | null;
   if (user) {
     const favNews = user.favorite_news.map((element) => filterData(element, 3)).filter(Boolean);
     if (favNews.length > 0) {

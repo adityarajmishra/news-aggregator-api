@@ -9,23 +9,9 @@ const userRoutes = express.Router();
 userRoutes.use(express.json());
 userRoutes.use(express.urlencoded({ extended: true }));
 
-/**
- * To register user
- * Request body: {
- *   "user_name": "Vu",
- *   "user_email": "@outlook.com",
- *   "password": "password"
- * }
- */
 userRoutes.post('/register', register);
 
-/**
- * To login and get jwt
- * Request body: {
- *   "user_email": "vishnup41@outlook.com",
- *   "password": "123@Adm"
- * }
- */
+
 userRoutes.post('/login', login);
 
 /**
@@ -33,7 +19,7 @@ userRoutes.post('/login', login);
  */
 userRoutes.get('/preferences/:id', (req: Request, res: Response) => {
   const user = filterData(req.params.id, 1); // 1 => user data where userId = passed id
-  res.status(200).send(user[0].user_preferences);
+  res.status(200).send((user as any[])[0].user_preferences);
 });
 
 /**
