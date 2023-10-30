@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
 import { format } from 'date-fns'; // Import date-fns format function
 import { filterData } from '../helpers/filetrData';
+import { sendVerificationEmail } from '../routes/verification';
 
 /**
  * User Model
@@ -66,10 +67,20 @@ function userFromJSON(obj: any, operation: string = 'create'): { status: boolean
       const user_id = uuidv4();
       const created_at = format(new Date(), 'yyyyMMddHHmmss'); // Use date-fns format
       const hashedPassword = bcrypt.hashSync(password, 8);
-
+  
+      // Generate a verification token (you can use a library like uuid)
+      const verificationToken = 'unique_token_generated_here';
+  
+      // Construct the verification URL
+      const verificationUrl = `http://yourapp.com/verify?token=${verificationToken}`;
+  
+      // Send the verification email
+      sendVerificationEmail(user_email, verificationUrl , "");
+  
+      // Create the user with unverified status
       return {
         status: true,
-        message: 'User added successfully',
+        message: 'User added successfully. Check your email for verification.',
         user: new User(user_id, user_name, user_email, hashedPassword, type, user_preferences, liked_news, created_at),
       };
     } else if (userData && userData[0] !== null) {

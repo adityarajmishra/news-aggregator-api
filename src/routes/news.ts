@@ -4,7 +4,12 @@ import { readNews, markNewsFavorite } from '../helpers/updateUser';
 import { getReadNews, getFavNews, getUserPrefs } from '../helpers/retrievenewsFromFile';
 import newsData from '../db/news-db.json';
 import { fetchUrl } from '../helpers/fetchUrl';
+import { queryParamsValidator } from '../validators/inputValidators'; // Import the validator function
+import NodeCache from 'node-cache';
 
+const cache = new NodeCache();
+// Define a cache with a specific TTL (time to live) in seconds
+const cacheTTLInSeconds = 60; // Adjust the TTL as needed
 
 const newsRoutes = express.Router();
 const URL = 'https://newsapi.org/v2/';
@@ -18,17 +23,40 @@ newsRoutes.use(express.urlencoded({ extended: true }));
  * Endpoint: /api/news/
  */
 newsRoutes.get('/', (req: Request, res: Response) => {
+  // Define a cache key based on the request URL
+  const cacheKey = req.originalUrl;
+
+  // Check if the data is in the cache
+  const cachedData = cache.get(cacheKey);
+
+  if (cachedData) {
+    // If data is in the cache, return it
+    return res.status(200).send(cachedData);
+  }
+
+  // If data is not in the cache, check if you have news data
   if (newsData.news.length > 0) {
+    // Cache the data
+    cache.set(cacheKey, newsData, cacheTTLInSeconds);
+
+    // Return the data
     res.status(200).send(newsData);
   } else {
     res.status(404).send({ message: 'No news found' });
   }
 });
 
+
 /**
  * News by preferences
  */
 newsRoutes.get('/userprefs', (req: Request, res: Response) => {
+  // Validate the query parameter
+  const userIdValidation = queryParamsValidator(req.query.userId as string, 'string');
+  if (!userIdValidation.status) {
+    return res.status(400).send({ message: userIdValidation.message });
+  }
+
   const userpref = getUserPrefs(req.query.userId);
 
   if (userpref.status) {
