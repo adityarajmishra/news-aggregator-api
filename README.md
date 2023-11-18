@@ -1,7 +1,10 @@
 # News Aggregator API
 
-This API is used to fetch news, perform CRUD on newsDb and have some authentication with users 
-This project also fetches news by category from NewsAPI
+1. This API is used to fetch news, perform CRUD on newsDb and have some authentication with users.
+2. This project also fetches news by category from NewsAPI.
+3. Added Helmet and Express Validators with custom input validatotrs for Input Validation and Sanitization.
+4. Added Unit test cases , End-to-End , Integration testing for better bug free code and smooth running.
+5. Added Performance Optimization , Rate Limiting , Email Verification , Request Logging for better logs and App.
 
 
 ## User APIs
