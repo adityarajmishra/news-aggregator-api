@@ -18,7 +18,12 @@ and this project adheres to
 
 ### Added
 
- API to fetch news, perform CRUD on newsDb and have some authentication with users 
-added news by category and preferences.
+1. API to fetch news, perform CRUD on newsDb and have some authentication with users added news by category and preferences.
 
+## [Release Date - 18-OCT-2023]
 
+### Added
+
+1. Added Helmet and Express Validators with custom input validatotrs for Input Validation and Sanitization.
+2. Added Unit test cases , End-to-End , Integration testing for better bug free code and smooth running.
+3. Added Performance Optimization , Rate Limiting , Email Verification , Request Logging for better logs and App.
